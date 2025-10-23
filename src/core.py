@@ -35,17 +35,39 @@ class Lista:
             elif decisao == "2":
                 while True:
                     qual_id = input("Qual o ID da tarefa que deseja editar? | Menu [0]: ")
-                    self._cursor.execute("SELECT id FROM Tarefas WHERE id = ?", (qual_id,))
-                    if qual == "0":
+
+                    # 1. Checar saída
+                    if qual_id == "0":
                         break
-                    if qual in self._lista_tarefas:
+
+                    # 2. Tentar encontrar o ID no banco (como você fez)
+                    self._cursor.execute("SELECT id FROM Tarefas WHERE id = ?", (qual_id,))
+
+                    # 3. Puxar o resultado para o Python (O PASSO QUE FALTA)
+                    tarefa_encontrada = self._cursor.fetchone()
+                    # (fetchone() retorna a tupla (id,) se achar, ou None se não achar)
+
+                    # 4. A NOVA VALIDAÇÃO (Substitui o "if qual in ...")
+                    if tarefa_encontrada:  # (Se "tarefa_encontrada" não for None)
+                        # 4a. O ID EXISTE. Agora sim, peça o novo texto
                         p_qual = input("O que deseja escrever sobre ela? | Menu [0]: ")
+
                         if p_qual == "0":
-                            break
-                        self._lista_tarefas[self._lista_tarefas.index(qual)] = p_qual
-                    else:
-                        print(f"[ERROR] A tarefa escolhida não existe!: '{qual}'")
-                        continue
+                            break  # (Sai do loop de edição)
+
+                        # 4b. Aplicar o UPDATE (O NOVO COMANDO SQL)
+                        # (Substitui a linha do .index())
+                        # self._cursor.execute("UPDATE Tarefas SET descricao = ? WHERE id = ?", (p_qual, qual_id))
+
+                        # 4c. Salvar a mudança (O COMMIT)
+                        # self._conexao.commit()
+
+                        # (Opcional, mas bom: print("Tarefa atualizada!") e dê um 'break' para voltar ao menu)
+
+                    else:  # (Se "tarefa_encontrada" for None)
+                        # 5. O ID NÃO EXISTE. Avise o usuário.
+                        print(f"[ERROR] ID não encontrado: '{qual_id}'")
+                        # (O 'continue' é automático aqui)
 
 
 
