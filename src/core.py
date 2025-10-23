@@ -1,6 +1,21 @@
+import sqlite3
+
 class Lista:
     def __init__(self):
-        self._lista_tarefas = []
+
+    # 1. Conectar ao banco (cria se não existir)
+        self._conexao = sqlite3.connect("bb_tarefas.db")
+
+    # 2. Pegar o cursor
+        self._cursor = self._conexao.cursor()
+
+    # 3. Executar o "CREATE TABLE IF NOT EXISTS ..."
+        self._cursor.execute("CREATE TABLE IF NOT EXISTS Tarefas(id INTEGER PRIMARY KEY AUTOINCREMENT, descricao TEXT NOT NULL)")
+
+    # 4. Salvar a criação da tabela
+        self._conexao.commit()
+
+    # O self._lista_tarefas = [] não é mais necessário aqui.
 
     def menu_tarefas(self):
         while True:
