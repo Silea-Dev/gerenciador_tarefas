@@ -36,9 +36,9 @@ class Seguranca:
         self.key = key_str
 
     def testar(self):
-        if self.nome != "eu" and self.key != "eu":
-            return False
-        return True
+        if self.nome == "eu" and self.key == "eu":
+            return True
+        return False
 
 
 
@@ -60,6 +60,7 @@ def iniciar():
             break
         if pergunta == "1":
             motor.menu_tarefas()
+
 
 def login():
     while True:
