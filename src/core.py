@@ -19,7 +19,9 @@ class Lista:
 
     def menu_tarefas(self):
         while True:
-            print(self._lista_tarefas)
+            self._cursor.execute("SELECT * FROM Tarefas")
+            resultados = self._cursor.fetchall()
+            print(resultados)
             decisao = input("\nAdicionar tarefa [1] | Editar [2] | sair [0]: ")
             if decisao == "0":
                 break
@@ -28,10 +30,12 @@ class Lista:
                     nova_tarefa = input("Escreva a nova tarefa | Menu [0]: ")
                     if nova_tarefa == "0":
                         break
-                    self._lista_tarefas.append(nova_tarefa)
+                    self._cursor.execute("INSERT INTO Tarefas(descricao) VALUES(?)", (nova_tarefa,))
+                    self._conexao.commit()
             elif decisao == "2":
                 while True:
-                    qual = input("Qual tarefa? | Menu [0]: : ")
+                    qual_id = input("Qual o ID da tarefa que deseja editar? | Menu [0]: ")
+                    self._cursor.execute("SELECT id FROM Tarefas WHERE id = ?", (qual_id,))
                     if qual == "0":
                         break
                     if qual in self._lista_tarefas:
