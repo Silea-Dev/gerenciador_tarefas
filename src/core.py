@@ -88,6 +88,7 @@ class Lista:
 
             if apagar_str == "0":
                 break
+
             try:
                 apagar_int = int(apagar_str)
                 if apagar_int < 0:
@@ -122,7 +123,7 @@ class Lista:
     def menu_tarefas(self):
         while True:
             self.consulta_tarefas()
-            decisao = input("\nAdicionar tarefa[1] | Editar[2] | Concluir[3] | Apagar[4] | sair [0]: ")
+            decisao = input("\nAdicionar tarefa[1] | Editar[2] | Concluir[3] | Apagar[4] | Sair [0]: ")
             if decisao == "0":
                 break
             if decisao == "1":
@@ -148,19 +149,7 @@ class Seguranca:
 
 def iniciar():
     motor = Lista()
-
-    print("O que deseja fazer?\n")
-    while True:
-        pergunta = input("Tarefas[1] | Sair[0] | : ")
-
-        if pergunta not in ["0", "1"]:
-            print("[ERROR] Digite uma opção valida!")
-            continue
-        if pergunta == "0":
-            print("Saindo...")
-            break
-        if pergunta == "1":
-            motor.menu_tarefas()
+    motor.menu_tarefas()
 
 
 
