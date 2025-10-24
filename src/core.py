@@ -152,7 +152,6 @@ def iniciar():
     motor.menu_tarefas()
 
 
-
 def login():
     while True:
         usuario = input("Digite o nome do usuario: ")
