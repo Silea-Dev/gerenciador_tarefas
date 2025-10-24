@@ -1,27 +1,21 @@
 import sqlite3
-
+import pandas as pd
 class Lista:
     def __init__(self):
 
-    # 1. Conectar ao banco (cria se não existir)
         self._conexao = sqlite3.connect("bb_tarefas.db")
 
-    # 2. Pegar o cursor
         self._cursor = self._conexao.cursor()
 
-    # 3. Executar o "CREATE TABLE IF NOT EXISTS ..."
         self._cursor.execute("CREATE TABLE IF NOT EXISTS Tarefas(id INTEGER PRIMARY KEY AUTOINCREMENT, descricao TEXT NOT NULL)")
 
-    # 4. Salvar a criação da tabela
         self._conexao.commit()
 
-    # O self._lista_tarefas = [] não é mais necessário aqui.
 
     def menu_tarefas(self):
         while True:
-            self._cursor.execute("SELECT * FROM Tarefas")
-            resultados = self._cursor.fetchall()
-            print(resultados)
+            df = pd.read_sql_query("SELECT id, descricao FROM Tarefas", self._conexao)
+            print(df)
             decisao = input("\nAdicionar tarefa [1] | Editar [2] | sair [0]: ")
             if decisao == "0":
                 break
@@ -35,39 +29,34 @@ class Lista:
             elif decisao == "2":
                 while True:
                     qual_id = input("Qual o ID da tarefa que deseja editar? | Menu [0]: ")
-
-                    # 1. Checar saída
                     if qual_id == "0":
                         break
+                    try:
+                        qual_id_int = int(qual_id)
+                        if qual_id_int < 0:
+                            print("[ALERT] Id precisa ser positivo!")
+                            continue
+                    except ValueError as v:
+                        print(f"[ERROR] Digite um id válido (Inteiro maior que zero): {v}")
+                        continue
 
-                    # 2. Tentar encontrar o ID no banco (como você fez)
-                    self._cursor.execute("SELECT id FROM Tarefas WHERE id = ?", (qual_id,))
+                    self._cursor.execute("SELECT id FROM Tarefas WHERE id = ?", (qual_id_int,))
 
-                    # 3. Puxar o resultado para o Python (O PASSO QUE FALTA)
                     tarefa_encontrada = self._cursor.fetchone()
-                    # (fetchone() retorna a tupla (id,) se achar, ou None se não achar)
-
-                    # 4. A NOVA VALIDAÇÃO (Substitui o "if qual in ...")
-                    if tarefa_encontrada:  # (Se "tarefa_encontrada" não for None)
-                        # 4a. O ID EXISTE. Agora sim, peça o novo texto
+                    if tarefa_encontrada:
                         p_qual = input("O que deseja escrever sobre ela? | Menu [0]: ")
 
                         if p_qual == "0":
-                            break  # (Sai do loop de edição)
+                            break
 
-                        # 4b. Aplicar o UPDATE (O NOVO COMANDO SQL)
-                        # (Substitui a linha do .index())
-                        # self._cursor.execute("UPDATE Tarefas SET descricao = ? WHERE id = ?", (p_qual, qual_id))
+                        self._cursor.execute("UPDATE Tarefas SET descricao = ? WHERE id = ?", (p_qual, qual_id_int) )
+                        self._conexao.commit()
 
-                        # 4c. Salvar a mudança (O COMMIT)
-                        # self._conexao.commit()
+                        print("Tarefa atualizada!")
+                        break
 
-                        # (Opcional, mas bom: print("Tarefa atualizada!") e dê um 'break' para voltar ao menu)
-
-                    else:  # (Se "tarefa_encontrada" for None)
-                        # 5. O ID NÃO EXISTE. Avise o usuário.
-                        print(f"[ERROR] ID não encontrado: '{qual_id}'")
-                        # (O 'continue' é automático aqui)
+                    else:
+                        print(f"[ERROR] ID não encontrado: '{qual_id_int}'")
 
 
 
@@ -82,16 +71,13 @@ class Seguranca:
         return False
 
 
-
-
-
 def iniciar():
     motor = Lista()
     lista_opcoes = ["0", "1", "2"]
 
     print("O que deseja fazer?\n")
     while True:
-        pergunta = input("Tarefas[1] | Menu[2] | Sair[0] | : ")
+        pergunta = input("Tarefas[1] | Sair[0] | : ")
 
         if pergunta not in lista_opcoes:
             print("[ERROR] Digite uma opção valida!")
