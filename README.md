@@ -1,4 +1,3 @@
-
 # Gerenciador de Tarefas com Python, SQL e Pandas (CRUD)
 
 Uma aplicação de terminal completa para gerenciamento de tarefas pessoais, demonstrando a implementação de um sistema CRUD (Create, Read, Update, Delete) com persistência de dados em um banco SQLite.
@@ -51,4 +50,4 @@ O projeto evoluiu de um único menu monolítico para uma aplicação Orientada a
 
 ## Referências
 
-Acessar SQL: conceitos básicos, vocabulário e sintaxe. Disponível em [https://support.microsoft.com/pt-br/topic/acessar-sql-conceitos-b%C3%A1sicos-vocabul%C3%A1rio-e-sintaxe-444d0303-cde1-424e-9a74-e8dc3e460671](https://support.microsoft.com/pt-br/topic/acessar-sql-conceitos-b%C3%A1sicos-vocabul%C3%A1rio-e-sintaxe-444d0303-cde1-424e-9a74-e8dc3e460671%E2%80%B8 "null"). Acessado em 20/10/2025.
+Acessar SQL: conceitos básicos, vocabulário e sintaxe. Disponível em [https://support.microsoft.com/pt-br/topic/acessar-sql-conceitos-b%C3%A1sicos-vocabul%C3%A1rio-e-sintaxe-444d0303-cde1-424e-9a74-e8dc3e460671](https://support.microsoft.com/pt-br/topic/acessar-sql-conceitos-b%C3%A1sicos-vocabul%C3%A1rio-e-sintaxe-444d0303-cde1-424e-9a74-e8dc3e460671). Acessado em 20/10/2025.
