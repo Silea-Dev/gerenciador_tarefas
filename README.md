@@ -13,7 +13,7 @@ O projeto evoluiu de um único menu monolítico para uma aplicação Orientada a
 
 * **Python 3**
 * **SQL (SQLite):**
-  * **DDL (Data Definition Language):** `CREATE TABLE`, `PRIMARY KEY AUTOINCREMENT`, `NOT NULL`, `DEFAULT 0`.
+  * **DDL (Data Definition Language) :** `CREATE TABLE`, `PRIMARY KEY AUTOINCREMENT`, `NOT NULL`, `DEFAULT 0`.
   * **DML (Data Manipulation Language):** Implementação do ciclo CRUD completo (`INSERT`, `SELECT`, `UPDATE`, `DELETE`) com placeholders (`?`).
 * **Pandas:** Utilizado para carregar (`read_sql_query`) e exibir os dados do `SELECT` de forma limpa e formatada no terminal.
 * **Programação Orientada a Objetos (POO):** Toda a lógica de negócios e interação com o banco foi encapsulada na classe `Lista`.

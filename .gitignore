@@ -3,3 +3,4 @@
 /.venv
 /bb_tarefas.db
 __pycache__/
+/tests
